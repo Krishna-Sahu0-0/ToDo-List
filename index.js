@@ -12,9 +12,13 @@ app.get("/", function (req, res) {
     res.render("list", {ejes : items})
 });
 
+
 app.post("/", function (req, res) {
     var item = req.body.ele1;
-    items.push(item);
+    // Input validation: prevent blank or whitespace-only submissions
+    if (item && item.trim() !== "") {
+        items.push(item.trim());
+    }
     res.redirect("/");
 });
 
