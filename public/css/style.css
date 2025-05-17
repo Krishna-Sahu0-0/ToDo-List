@@ -1,8 +1,16 @@
-html {
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
     background-color: #E4E9FD;
     background-image: -webkit-linear-gradient(65deg, #A683E3 50%, #E4E9FD 50%);
-    min-height: 1000px;
     font-family: 'helvetica neue';
+    box-sizing: border-box;
+}
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 h1 {
@@ -13,10 +21,12 @@ h1 {
 
 .box {
     max-width: 400px;
-    margin: 50px auto;
+    margin: 30px auto 0 auto;
     background: white;
     border-radius: 5px;
-    box-shadow: 5px 5px 15px -5px rgba(0, 0, 0, 0.3);
+    padding: 20px 25px 10px 25px;
+    box-shadow: 0 2px 8px rgba(166,131,227,0.1);
+    flex-shrink: 0;
 }
 
 #heading {
@@ -93,4 +103,100 @@ footer {
     color: white;
     color: rgba(0, 0, 0, 0.5);
     text-align: center;
+    margin-top: auto;
+    background: #A683E3;
+    color: #fff;
+    padding: 15px 0;
+    border-radius: 0 0 5px 5px;
+    box-shadow: 0 -2px 8px rgba(166,131,227,0.1);
+}
+
+/* Add at the end of your style.css */
+.priority {
+    display: inline-block;
+    margin-left: 10px;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.8em;
+    font-weight: bold;
+    vertical-align: middle;
+    opacity: 0.85;
+}
+.priority.high {
+    background: #e74c3c;
+    color: #fff;
+}
+.priority.medium {
+    background: #f1c40f;
+    color: #fff;
+}
+.priority.low {
+    background: #2ecc71;
+    color: #fff;
+}
+
+/* Add at the end of your style.css */
+body, html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Filter dropdown */
+#filter {
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: 1px solid #A683E3;
+    background: #f9f9f9;
+    font-size: 1em;
+    margin-right: 10px;
+}
+
+/* Add button */
+button[type="submit"], button[title="Add Task"] {
+    background: #A683E3;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 14px;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+button[type="submit"]:hover, button[title="Add Task"]:hover {
+    background: #7c5cc4;
+}
+
+/* Icon buttons */
+button i.fa-pencil {
+    color: #2980b9;
+    font-size: 1.1em;
+}
+button i.fa-pencil:hover {
+    color: #154360;
+}
+button i.fa-trash {
+    color: #e74c3c;
+    font-size: 1.1em;
+}
+button i.fa-trash:hover {
+    color: #922b21;
+}
+button i.fa-check {
+    color: #27ae60;
+    font-size: 1.1em;
+}
+button i.fa-check:hover {
+    color: #145a32;
+}
+
+/* Edit and delete buttons spacing */
+.item form {
+    display: inline-block;
+    margin-left: 5px;
 }

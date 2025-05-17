@@ -3,23 +3,73 @@
 <head>
     <title>Todo list</title>
     <link rel="stylesheet" href="css/style.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body>
+    <%- include('partials/header') %>
+
     <div class="box">
-        <h1>Todo list</h1>
-    </div>
-    <div class="box">
+        <!-- Filter by Priority -->
+        <form action="/" method="get" style="margin-bottom: 20px; display: flex; align-items: center;">
+            <label for="filter" style="margin-right: 10px;">Filter by Priority:</label>
+            <select name="filter" id="filter" onchange="this.form.submit()">
+                <option value="all" <%= filter === "all" ? "selected" : "" %>>All</option>
+                <option value="high" <%= filter === "high" ? "selected" : "" %>>High</option>
+                <option value="medium" <%= filter === "medium" ? "selected" : "" %>>Medium</option>
+                <option value="low" <%= filter === "low" ? "selected" : "" %>>Low</option>
+            </select>
+        </form>
+
+        <!-- Todo Creation Box -->
+        <form action="/" method="post" style="display: flex; gap: 10px; margin-bottom: 20px;">
+            <input type="text" name="ele1" placeholder="Enter the task" required>
+            <select name="priority" required>
+                <option value="high">High</option>
+                <option value="medium" selected>Medium</option>
+                <option value="low">Low</option>
+            </select>
+            <button type="submit" title="Add Task">+</button>
+        </form>
+
         <% for (var i=0; i<ejes.length; i++){ %>
-            <div class="item">
-                <input type="checkbox">
-                <p><%= ejes[i] %></p>
+            <div class="item" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+                <div style="flex: 1;">
+                    <% if (editIndex === i) { %>
+                        <form action="/update" method="post" style="display:flex; gap:8px; align-items:center;">
+                            <input type="hidden" name="index" value="<%= i %>">
+                            <input type="text" name="newTitle" value="<%= ejes[i].title %>" required style="flex:1;">
+                            <select name="newPriority" required>
+                                <option value="high" <%= ejes[i].priority === "high" ? "selected" : "" %>>High</option>
+                                <option value="medium" <%= ejes[i].priority === "medium" ? "selected" : "" %>>Medium</option>
+                                <option value="low" <%= ejes[i].priority === "low" ? "selected" : "" %>>Low</option>
+                            </select>
+                            <button type="submit" title="Save"><i class="fa fa-check"></i></button>
+                        </form>
+                    <% } else { %>
+                        <div>
+                            <span style="font-size:1.1em;"><%= ejes[i].title %></span><br>
+                            <span class="priority <%= ejes[i].priority %>"><%= ejes[i].priority.charAt(0).toUpperCase() + ejes[i].priority.slice(1) %></span>
+                        </div>
+                    <% } %>
+                </div>
+                <div>
+                    <% if (editIndex !== i) { %>
+                        <form action="/edit" method="post" style="display:inline;">
+                            <input type="hidden" name="index" value="<%= i %>">
+                            <input type="hidden" name="filter" value="<%= filter %>">
+                            <button type="submit" title="Edit"><i class="fa fa-pencil"></i></button>
+                        </form>
+                    <% } %>
+                    <form action="/delete" method="post" style="display:inline;">
+                        <input type="hidden" name="index" value="<%= i %>">
+                        <button type="submit" title="Delete"><i class="fa fa-trash"></i></button>
+                    </form>
+                </div>
             </div>
         <% } %>
-            
-        <form action="/" method="post">
-            <input type="text" name="ele1" placeholder="Enter the task">
-            <button type="submit">+</button>
-        </form>
     </div>
+
+    <%- include('partials/footer') %>
 </body>
 </html>
