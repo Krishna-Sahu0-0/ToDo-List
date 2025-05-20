@@ -3,14 +3,12 @@
 <head>
     <title>Todo list</title>
     <link rel="stylesheet" href="css/style.css">
-    <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body>
     <%- include('partials/header') %>
 
     <div class="box">
-        <!-- Filter by Priority -->
         <form action="/" method="get" style="margin-bottom: 20px; display: flex; align-items: center;">
             <label for="filter" style="margin-right: 10px;">Filter by Priority:</label>
             <select name="filter" id="filter" onchange="this.form.submit()">
@@ -21,7 +19,6 @@
             </select>
         </form>
 
-        <!-- Todo Creation Box -->
         <form action="/" method="post" style="display: flex; gap: 10px; margin-bottom: 20px;">
             <input type="text" name="ele1" placeholder="Enter the task" required>
             <select name="priority" required>
@@ -36,7 +33,7 @@
             <div class="item" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
                 <div style="flex: 1;">
                     <% if (editIndex === i) { %>
-                        <form action="/update" method="post" style="display:flex; gap:8px; align-items:center;">
+                        <form action="/update?_method=PUT" method="POST" style="display:flex; gap:8px; align-items:center;">
                             <input type="hidden" name="index" value="<%= i %>">
                             <input type="text" name="newTitle" value="<%= ejes[i].title %>" required style="flex:1;">
                             <select name="newPriority" required>
@@ -61,7 +58,7 @@
                             <button type="submit" title="Edit"><i class="fa fa-pencil"></i></button>
                         </form>
                     <% } %>
-                    <form action="/delete" method="post" style="display:inline;">
+                    <form action="/delete?_method=DELETE" method="POST" style="display:inline;">
                         <input type="hidden" name="index" value="<%= i %>">
                         <button type="submit" title="Delete"><i class="fa fa-trash"></i></button>
                     </form>

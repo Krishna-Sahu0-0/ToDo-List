@@ -1,15 +1,15 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const methodOverride = require("method-override"); // <-- Add this
 
 var app = express();
 app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
+app.use(methodOverride('_method')); // <-- Add this
 
-// Each item: { title: string, priority: string }
 var items = [];
 
-// Render list with optional edit index and filter
 app.get("/", function (req, res) {
     const filter = req.query.filter || "all";
     let filteredItems = items;
@@ -19,7 +19,6 @@ app.get("/", function (req, res) {
     res.render("list", { ejes: filteredItems, editIndex: null, filter });
 });
 
-// Add new task
 app.post("/", function (req, res) {
     var item = req.body.ele1;
     var priority = req.body.priority || "medium";
@@ -29,8 +28,7 @@ app.post("/", function (req, res) {
     res.redirect("/");
 });
 
-// Delete task
-app.post("/delete", function (req, res) {
+app.delete("/delete", function (req, res) {
     const index = parseInt(req.body.index);
     if (!isNaN(index)) {
         items.splice(index, 1);
@@ -38,7 +36,6 @@ app.post("/delete", function (req, res) {
     res.redirect("/");
 });
 
-// Show edit form for a task
 app.post("/edit", function (req, res) {
     const index = parseInt(req.body.index);
     const filter = req.body.filter || "all";
@@ -49,8 +46,7 @@ app.post("/edit", function (req, res) {
     res.render("list", { ejes: filteredItems, editIndex: index, filter });
 });
 
-// Update task after editing
-app.post("/update", function (req, res) {
+app.put("/update", function (req, res) {
     const index = parseInt(req.body.index);
     const newTitle = req.body.newTitle;
     const newPriority = req.body.newPriority || "medium";
